@@ -10,6 +10,7 @@ Example:
 
 import boto3
 import json
+from progress.bar import Bar
 
 from botocore.exceptions import ClientError
 
@@ -24,10 +25,11 @@ def get_wildcard_policies():
     ).build_full_result()
 
     num_of_policies=len(policies_response['Policies'])+1
+    bar = Bar('Processing roles:', max = num_of_policies)
     if num_of_policies > 100: print("This may take a while to process all", num_of_policies,"policies, please wait....")
 
     for count, policy in enumerate(policies_response['Policies']):
-        print("Processing policy:", count+1, "of", num_of_policies)
+        bar.next()
 
         # The policy doesn't contain the actual policy document, get the latest version of it.
         policy_version = client.get_policy_version(

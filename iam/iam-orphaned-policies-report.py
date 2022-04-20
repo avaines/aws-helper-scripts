@@ -10,6 +10,7 @@ Example:
 
 import boto3
 import json
+from progress.bar import Bar
 
 def get_orphaned_policies():
 
