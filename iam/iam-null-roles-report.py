@@ -1,4 +1,3 @@
-from urllib import response
 """iam-null-roles-report
 
 This script is intended for enumerating all IAM roles to find those with no attached permissions.
@@ -29,6 +28,9 @@ def get_null_roles():
         attached_policies = client.list_attached_role_policies(
             RoleName=role['RoleName']
         )
+
+        if role['RoleName'] == "AmazonSSMRoleForAutomationAssumeQuickSetup":
+            print()
 
         if len(attached_policies['AttachedPolicies']) == 0:
             roles.append(role)
